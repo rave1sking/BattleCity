@@ -1,0 +1,5 @@
+﻿  MainTank.cpp
+  main.cpp
+C:\Users\螅一\Desktop\TankWar\TankWar\main.cpp(14,1): warning C4326: “main”的返回类型应为“int”而非“void”
+  正在生成代码...
+  TankWar.vcxproj -> C:\Users\螅一\Desktop\TankWar\Debug\TankWar.exe
