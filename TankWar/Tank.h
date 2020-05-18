@@ -1,34 +1,36 @@
 #ifndef __TANK_H__
 #define __TANK_H__
 
-#include "Object.h"
-
+#include "Graphic.h"
 #include <list>
 
 using namespace std;
-
-class Tank : public Object
+class Tank
 {
 public:
     Tank()
     {
         m_pos.Set(300, 300);
-        //this->CalculateSphere();
         m_dir = Dir::UP;
+       // this->CalculateSphere();
         m_step = 4;
-        m_Disapear = false;
+        m_Disappear = false; 
     }
     ~Tank() {}
-    //void Display();
-    //void Move();
-    void Shoot(list<Object*>& Bullets);
-
-    bool IsDisapear()
+    void Display();
+    void Move();
+    bool IsDisappear()
     {
-        return m_Disapear;
+        return m_Disappear;
     }
 protected:
     void CalculateSphere();
+    bool m_Disappear;
+    int m_step;
+    Point m_pos;
+    Dir m_dir;
+    Rect m_rectSphere; //∂‘œÛ∑∂Œß
+
 };
 
 #endif

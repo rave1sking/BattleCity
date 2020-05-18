@@ -2,7 +2,7 @@
 #define __MAIN_TANK__
 
 #include "Tank.h"
-
+#include "Bullet.h"
 class MainTank : public Tank
 {
 public:
@@ -21,7 +21,7 @@ public:
     void SetDir(Dir dir);
     void Display();
     void Move();
-    void Shoot(list<Object*>& Bullets);
+    void Shoot(list<Bullet*>& Bullets);
 protected:
     //坦克所占矩形体积
     void CalculateSphere();

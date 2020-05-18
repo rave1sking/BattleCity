@@ -3,14 +3,17 @@
 #include <iostream>
 #include <conio.h>
 #include <time.h>
-
 #include <list>
+#include <stdlib.h>
+
 
 #include "Graphic.h"
 #include "MainTank.h"
 #include "EnemyTank.h"
 #include "EnemyTank.cpp"
-#include "Bullet.h"
+#include "Bullet.cpp"
+#include "Bomb.h"
+#include "Bomb.cpp"
 
 #define MAX_ENEMYTANKS 5
 
@@ -43,9 +46,14 @@ int main()
 		lstTanks.push_back(new EnemyTank()); //添加一个新坦克
 	}
 	//子弹的实现：
-	list<Object*> Bullets;
+	list<Bullet*> Bullets;
 	Bullets.clear();
     
+	//爆炸的实现
+	list<Bomb*> Bombs;
+	Bombs.clear();
+
+
 	MainTank mainTank;
 	bool loop = true;
 	bool skip = false;
@@ -108,15 +116,33 @@ int main()
 				(*it)->Display();
 			}
 			//初始化一个Bullets迭代器，用来实现子弹的发射
-			for (list<Object*>::iterator it = Bullets.begin(); it != Bullets.end();)
+			for (list<Bullet*>::iterator it = Bullets.begin(); it != Bullets.end();)
 			{
 				(*it)->Move();
 
-				if ((*it)->IsDisapear())
+				if ((*it)->IsDisappear())
 				{
-
+					//如果消失就爆炸
+					(*it)->bomb(Bombs);
 					delete* it;
 					it = Bullets.erase(it);
+					continue;
+				}
+
+				(*it)->Display();
+				it++;
+			}
+
+			// 初始化一个Bomb迭代器，用来实现爆炸的消失
+			for (list<Bomb*>::iterator it = Bombs.begin(); it != Bombs.end();)
+			{
+
+				(*it)->Move();  //如何延迟？
+
+				if ((*it)->IsDisappear())
+				{
+					delete* it;
+					it = Bombs.erase(it);
 					continue;
 				}
 
@@ -127,20 +153,28 @@ int main()
 		Sleep(200);
 	}
 	//退出之前养成删除的好习惯
-	//for (int i = 0; i < MAX_ENEMYTANKS; i++)
-	//{
-	//	delete eTank[i];
-	//}
+
+	//删除敌方坦克
 	for (list<EnemyTank*>::iterator it = lstTanks.begin(); it != lstTanks.end(); it++)
 	{
 		delete* it;
 	}
 	lstTanks.clear();
 
-	for (list<Object*>::iterator it = Bullets.begin(); it != Bullets.end(); it++)
+	//删除子弹
+	for (list<Bullet*>::iterator it = Bullets.begin(); it != Bullets.end(); it++)
 	{
 		delete* it;
 	}
 	Bullets.clear();
+
+	//删除爆炸
+	for (list<Bomb*>::iterator it = Bombs.begin(); it != Bombs.end(); it++)
+	{
+		delete* it;
+	}
+	Bombs.clear();
+
+
 	Graphic::Destroy();
 } 

@@ -1,5 +1,4 @@
 #include "MainTank.h"
-#include "Bullet.cpp"
 
 
 
@@ -86,7 +85,7 @@ void MainTank::CalculateSphere() //:CalculateSphere
 }
 
 //新加设计功能
-void MainTank::Shoot(list<Object*>& Bullets)
+void MainTank::Shoot(list<Bullet*>& Bullets)
 {
     Bullet* pBullet = new Bullet(m_pos,m_dir);
     Bullets.push_back(pBullet);

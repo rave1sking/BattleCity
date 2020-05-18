@@ -1,5 +1,4 @@
 #include "EnemyTank.h"
-#include "Tank.h"
 
 void EnemyTank::RandomTank()
 {

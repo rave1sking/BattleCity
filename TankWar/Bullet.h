@@ -1,9 +1,10 @@
 #ifndef _BULLET_H_
 #define _BULLET_H_
 
-#include "Object.h"
+#include "Bomb.h"
+#include "Graphic.h"
 
-class Bullet : public Object
+class Bullet
 {
 public:
     Bullet();
@@ -11,13 +12,18 @@ public:
     ~Bullet();
     void Display();
     void Move();
-    bool IsDisapear()
+    bool IsDisappear()
     {
-        return m_Disapear;
+        return m_Disappear;
     }
-
+    void bomb(list<Bomb*>& Bombs);
 protected:
     void CalculateSphere();
+    bool m_Disappear;
+    Point m_pos;
+    int m_step;
+    Dir m_dir;
+    Rect m_rectSphere;
 };
 
 #endif

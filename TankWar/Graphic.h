@@ -4,7 +4,7 @@
 
 #include <graphics.h>
 #include "Model/Rect.h"
-//#include "Model/Rect.cpp"
+enum Dir { UP, DOWN, LEFT, RIGHT };
 
 #define SCREEN_WIDTH	1024
 #define SCREEN_HEIGHT	768

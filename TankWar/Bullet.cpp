@@ -7,7 +7,7 @@ Bullet::Bullet(Point pos, Dir dir)
 	m_pos = pos;
 	m_dir = dir;
 	m_step = 20;
-    m_Disapear = false;
+    m_Disappear = false;
     
 	CalculateSphere();
 }
@@ -26,6 +26,7 @@ void Bullet::Display()
 
 void Bullet::Move()
 {
+
     switch (m_dir)
     {
     case UP:
@@ -33,7 +34,8 @@ void Bullet::Move()
         CalculateSphere();
         if (m_rectSphere.GetStartPoint().GetY() < Graphic::GetBattleGround().GetStartPoint().GetY())
         {
-            m_Disapear = true;
+            m_pos.SetY(Graphic::GetBattleGround().GetStartPoint().GetY());
+            m_Disappear = true;
         }
         break;
     case DOWN:
@@ -41,7 +43,8 @@ void Bullet::Move()
         CalculateSphere();
         if (m_rectSphere.GetEndPoint().GetY() > Graphic::GetBattleGround().GetEndPoint().GetY())
         {
-            m_Disapear = true;
+            m_pos.SetY(Graphic::GetBattleGround().GetEndPoint().GetY());
+            m_Disappear = true;
         }
         break;
     case LEFT:
@@ -49,7 +52,8 @@ void Bullet::Move()
         CalculateSphere();
         if (m_rectSphere.GetStartPoint().GetX() < Graphic::GetBattleGround().GetStartPoint().GetX())
         {
-            m_Disapear = true;
+            m_pos.SetX(Graphic::GetBattleGround().GetStartPoint().GetX());
+            m_Disappear = true;
         }
         break;
     case RIGHT:
@@ -57,7 +61,8 @@ void Bullet::Move()
         CalculateSphere();
         if (m_rectSphere.GetEndPoint().GetX() > Graphic::GetBattleGround().GetEndPoint().GetX())
         {
-            m_Disapear = true;
+            m_pos.SetX(Graphic::GetBattleGround().GetEndPoint().GetX());
+            m_Disappear = true;
         }
         break;
     default:
@@ -68,4 +73,10 @@ void Bullet::Move()
 void Bullet::CalculateSphere()
 {
     m_rectSphere.Set(m_pos.GetX() - 2, m_pos.GetY() - 2, m_pos.GetX() + 2, m_pos.GetY() + 2);
+}
+
+
+void Bullet::bomb(list<Bomb*>& Bombs)
+{
+    Bombs.push_back(new Bomb(m_pos, S));
 }
