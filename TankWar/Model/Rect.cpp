@@ -51,3 +51,22 @@ void Rect::Check()
 		m_endPoint = m_startPoint;
 	}
 }
+
+
+//new
+
+Point Rect::GetTRPoint() 
+{
+	Point p = m_startPoint;
+	p.SetX(m_endPoint.GetX());
+
+	return p;
+}
+
+Point Rect::GetBLPoint()
+{
+	Point p = m_startPoint;
+	p.SetY(m_endPoint.GetY());
+
+	return p;
+}

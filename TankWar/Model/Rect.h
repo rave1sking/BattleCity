@@ -29,7 +29,8 @@ public:
 
 	int GetWidth();
 	int GetHeight();
-
+	Point GetTRPoint() ; // 返回右上点
+	Point GetBLPoint() ; // 返回左下点
 
 private:
 	void Check();

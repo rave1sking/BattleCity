@@ -14,18 +14,36 @@
 #include "Bullet.cpp"
 #include "Bomb.h"
 #include "Bomb.cpp"
+//#include "Utils/Shape.h"
+#include "Utils/Shape.cpp"
 
 #define MAX_ENEMYTANKS 5
 
 using namespace std;
 IMAGE img;
 
-
+list<EnemyTank*> lstTanks;
+list<Bullet*> MainBullets;
+void CheckCrash()
+{
+	for (list<Bullet*>::iterator it = MainBullets.begin(); it != MainBullets.end(); it++)
+	{
+		for (list<EnemyTank*>::iterator itt = lstTanks.begin(); itt != lstTanks.end(); itt++)
+		{
+			Rect a = (*it)->GetSphere(); 
+			Rect b = (*itt)->GetSphere();
+			if (Shape::CheckIntersect(a, b))
+			{
+				(*itt)->SetDisappear();
+				(*it)->SetDisappear();
+			}
+		}
+	}
+}
 int main()
 {
 	Graphic::Create();
-	//MAGE img;
-	loadimage(&img, L"..\\img\\author.png", 200, 100);
+	/*loadimage(&img, L"..\\img\\author.png", 200, 100);
 	putimage(200, 300, &img);
 	_getch();
 	IMAGE img2;
@@ -35,19 +53,18 @@ int main()
 	m = getchar();
 	while (m != 'f' && m != 'F')
 		m = getchar();
-
+	*/
 	//Tank* eTank[MAX_ENEMYTANKS];
 	//用list 进行EenmyTank实现
-	list<EnemyTank*> lstTanks;
 	lstTanks.clear();
 
-	for (int i = 0; i < MAX_ENEMYTANKS; i++)
+	for (int i = 0; i <= MAX_ENEMYTANKS; i++)
 	{
 		lstTanks.push_back(new EnemyTank()); //添加一个新坦克
 	}
 	//子弹的实现：
-	list<Bullet*> Bullets;
-	Bullets.clear();
+    //主坦克子弹
+	MainBullets.clear();
     
 	//爆炸的实现
 	list<Bomb*> Bombs;
@@ -88,7 +105,7 @@ int main()
 				break;
 				// 32是空格Space 计划发射子弹
 			case 32:
-				mainTank.Shoot(Bullets);
+				mainTank.Shoot(MainBullets);
 				break;
 				// 13是Enter Enter暂停
 			case 13:
@@ -105,36 +122,48 @@ int main()
 		if (!skip)
 		{
 			cleardevice();
+			CheckCrash();
 			Graphic::DrawBattleGround();
 			mainTank.Move();
 			mainTank.Display();
-
-			//初始化一个Tank迭代器，用来实现每一个坦克的Move和Display
-			for (list<EnemyTank*>::iterator it = lstTanks.begin(); it != lstTanks.end(); it++)
+			//初始化一个Tank迭代器，用来实现每一个地方坦克的Move和Display
+			//list容器的 end() 函数来得到list末端下一位置
+			//相当于：int a[n]中的第n+1个位置a[n]，实际上是不存在的，不能访问。
+			for (list<EnemyTank*>::iterator it = lstTanks.begin(); it != lstTanks.end(); )
 			{
 				(*it)->Move();
+				if ((*it)->IsDisappear())
+				{
+					// Add a bomb
+					//(*it)->Boom(lstBombs);
+
+					// Delete the tank
+					delete* it;
+					it = lstTanks.erase(it);
+					continue;
+				}
 				(*it)->Display();
+				it++;
 			}
 			//初始化一个Bullets迭代器，用来实现子弹的发射
-			for (list<Bullet*>::iterator it = Bullets.begin(); it != Bullets.end();)
+			for (list<Bullet*>::iterator it = MainBullets.begin(); it != MainBullets.end();)
 			{
 				(*it)->Move();
 
 				if ((*it)->IsDisappear())
 				{
 					//如果消失就爆炸
-					(*it)->bomb(Bombs);
+					//(*it)->bomb(Bombs);
 					delete* it;
-					it = Bullets.erase(it);
+					it = MainBullets.erase(it);
 					continue;
 				}
-
 				(*it)->Display();
-				it++;
+				it++; //不然会溢出
 			}
 
 			// 初始化一个Bomb迭代器，用来实现爆炸的消失
-			for (list<Bomb*>::iterator it = Bombs.begin(); it != Bombs.end();)
+			/*for (list<Bomb*>::iterator it = Bombs.begin(); it != Bombs.end();)
 			{
 
 				(*it)->Move();  //如何延迟？
@@ -148,7 +177,7 @@ int main()
 
 				(*it)->Display();
 				it++;
-			}
+			}*/
 		}
 		Sleep(200);
 	}
@@ -162,11 +191,11 @@ int main()
 	lstTanks.clear();
 
 	//删除子弹
-	for (list<Bullet*>::iterator it = Bullets.begin(); it != Bullets.end(); it++)
+	for (list<Bullet*>::iterator it = MainBullets.begin(); it != MainBullets.end(); it++)
 	{
 		delete* it;
 	}
-	Bullets.clear();
+	MainBullets.clear();
 
 	//删除爆炸
 	for (list<Bomb*>::iterator it = Bombs.begin(); it != Bombs.end(); it++)

@@ -17,7 +17,10 @@ public:
 
     void Display();
     void Move();
-
+    Rect GetSphere()
+    {
+        return m_rectSphere;
+    }
 protected:
     void CalculateSphere();
     void RandomTank();

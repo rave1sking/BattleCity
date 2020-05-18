@@ -22,6 +22,10 @@ public:
     void Display();
     void Move();
     void Shoot(list<Bullet*>& Bullets);
+    Rect GetSphere()
+    {
+        return m_rectSphere;
+    }
 protected:
     //坦克所占矩形体积
     void CalculateSphere();

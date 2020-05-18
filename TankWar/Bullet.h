@@ -17,6 +17,14 @@ public:
         return m_Disappear;
     }
     void bomb(list<Bomb*>& Bombs);
+    Rect GetSphere()
+    {
+        return m_rectSphere;
+    }
+    void SetDisappear()
+    {
+        m_Disappear = true;
+    }
 protected:
     void CalculateSphere();
     bool m_Disappear;
