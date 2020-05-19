@@ -93,7 +93,12 @@ void EnemyTank::Move()
         m_stepCnt = 0;
         this->RandomDir(0);
     }
+    if (m_stepCnt % MAX_STEP_SHOOT == 0)  //每三步进行一次射击
+    {
+        m_NeedShoot = true;
+    }
     CalculateSphere();
+
 }
 
 void EnemyTank::CalculateSphere()
@@ -111,4 +116,18 @@ void EnemyTank::CalculateSphere()
     default:
         break;
     }
+}
+
+void EnemyTank::Shoot(list<Bullet*>& lstBullets)
+{
+    Bullet* eBullet = new Bullet(m_pos, m_dir);
+
+    lstBullets.push_back(eBullet);
+
+    m_NeedShoot = false;
+}
+
+bool EnemyTank::NeedShoot()
+{
+    return m_NeedShoot;
 }

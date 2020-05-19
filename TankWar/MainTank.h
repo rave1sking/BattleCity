@@ -11,7 +11,7 @@ public:
         m_pos.Set(300, 300);
         this->CalculateSphere();
         m_dir = Dir::UP;
-        m_step = 4;
+        m_step = 6;
 
     }
 

@@ -24,7 +24,11 @@ IMAGE img;
 
 list<EnemyTank*> lstTanks;
 list<Bullet*> MainBullets;
-void CheckCrash()
+list<Bullet*> EnemyBullets;
+
+MainTank mainTank;
+//检测坦克子弹和敌方坦克的碰撞
+void CheckCrashMain_to_Enemy()
 {
 	for (list<Bullet*>::iterator it = MainBullets.begin(); it != MainBullets.end(); it++)
 	{
@@ -39,6 +43,19 @@ void CheckCrash()
 			}
 		}
 	}
+}
+void CheckCrashEnemy_to_Main()
+{
+	for (list<Bullet*>::iterator it = EnemyBullets.begin(); it != MainBullets.end(); it++)
+	{
+			Rect a = (*it)->GetSphere();
+			Rect b = mainTank.GetSphere();
+			if (Shape::CheckIntersect(a, b))
+			{
+				mainTank.SetDisappear();
+				(*it)->SetDisappear();
+			}
+		}
 }
 int main()
 {
@@ -65,13 +82,13 @@ int main()
 	//子弹的实现：
     //主坦克子弹
 	MainBullets.clear();
-    
+    //敌人坦克子弹
+	EnemyBullets.clear();
+
 	//爆炸的实现
 	list<Bomb*> Bombs;
 	Bombs.clear();
 
-
-	MainTank mainTank;
 	bool loop = true;
 	bool skip = false;
 	while (loop)
@@ -122,7 +139,8 @@ int main()
 		if (!skip)
 		{
 			cleardevice();
-			CheckCrash();
+			CheckCrashMain_to_Enemy();
+			//CheckCrashEnemy_to_Main();
 			Graphic::DrawBattleGround();
 			mainTank.Move();
 			mainTank.Display();
@@ -132,6 +150,7 @@ int main()
 			for (list<EnemyTank*>::iterator it = lstTanks.begin(); it != lstTanks.end(); )
 			{
 				(*it)->Move();
+
 				if ((*it)->IsDisappear())
 				{
 					// Add a bomb
@@ -143,7 +162,27 @@ int main()
 					continue;
 				}
 				(*it)->Display();
+				if ((*it)->NeedShoot())
+				{
+					EnemyTank* p = (*it);
+					p->Shoot(EnemyBullets);
+				}
 				it++;
+			}
+			for (list<Bullet*>::iterator it = EnemyBullets.begin(); it != EnemyBullets.end();)
+			{
+				(*it)->Move();
+
+				if ((*it)->IsDisappear())
+				{
+					//如果消失就爆炸
+					//(*it)->bomb(Bombs);
+					delete* it;
+					it = EnemyBullets.erase(it);
+					continue;
+				}
+				(*it)->Display();
+				it++; //不然会溢出
 			}
 			//初始化一个Bullets迭代器，用来实现子弹的发射
 			for (list<Bullet*>::iterator it = MainBullets.begin(); it != MainBullets.end();)
@@ -179,6 +218,7 @@ int main()
 				it++;
 			}*/
 		}
+		Graphic::ShowScore();
 		Sleep(200);
 	}
 	//退出之前养成删除的好习惯

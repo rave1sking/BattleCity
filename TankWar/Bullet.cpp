@@ -6,7 +6,7 @@ Bullet::Bullet(Point pos, Dir dir)
 {
 	m_pos = pos;
 	m_dir = dir;
-	m_step = 20;
+	m_step = 35;
     m_Disappear = false;
     
 	CalculateSphere();
