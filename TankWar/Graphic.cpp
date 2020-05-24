@@ -3,6 +3,8 @@
 #include "Model/Rect.cpp"
 #include "Setting.cpp"
 #include "Setting.h"
+#include <string>
+
 Rect Graphic::m_rectScreen;
 Rect Graphic::m_rectBattleGround;
 char Graphic::m_pArray[100];
@@ -101,4 +103,33 @@ void Graphic::ShowScore()
     setcolor(color_save);
     setfillcolor(fill_color_save);
     //从上到下依次显示
+}
+
+void Graphic::ShowGameOver()
+{
+    COLORREF fill_color_save = getfillcolor();
+    COLORREF color_save = getcolor();
+
+    rectangle(BATTLE_GROUND_X1 + 100, BATTLE_GROUND_Y1 + 200, BATTLE_GROUND_X1 + 700, BATTLE_GROUND_Y1 + 380);
+
+    LOGFONT fontBak;
+    gettextstyle(&fontBak);               // 获取当前字体设置
+
+    LOGFONT f = fontBak;
+    f.lfHeight = 48;                      // 设置字体高度为 48
+    //_tcscpy_s(f.lfFaceName, _T("黑体"));  // 设置字体为“黑体”
+    f.lfQuality = ANTIALIASED_QUALITY;    // 设置输出效果为抗锯齿  
+    settextstyle(&f);                     // 设置字体样式
+    wsprintf((LPWSTR)m_pArray, _T("GAME OVER"));
+    outtextxy(BATTLE_GROUND_X1 + 300, BATTLE_GROUND_Y1 + 250, (LPWSTR)m_pArray);
+
+    f.lfHeight = 18;
+    settextstyle(&f);
+    wsprintf((LPWSTR)m_pArray, _T("按右上角X退出"));
+    outtextxy(BATTLE_GROUND_X1 + 550, BATTLE_GROUND_Y1 + 350, (LPWSTR)m_pArray);
+
+    settextstyle(&fontBak);
+
+    setcolor(color_save);
+    setfillcolor(fill_color_save);
 }

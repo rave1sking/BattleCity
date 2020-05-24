@@ -1,4 +1,16 @@
 #include "EnemyTank.h"
+#include "Barrier.cpp"
+
+IMAGE EnemyTankUP;
+IMAGE EnemyTankDOWN;
+IMAGE EnemyTankRIGHT;
+IMAGE EnemyTankLEFT;
+void initEnemyTankimage() {
+    loadimage(&EnemyTankUP, L"..\\img\\enemytank\\enemyUP.gif", 36, 36);
+    loadimage(&EnemyTankDOWN, L"..\\img\\enemytank\\enemyDOWN.gif", 36, 36);
+    loadimage(&EnemyTankRIGHT, L"..\\img\\enemytank\\enemyRIGHT.gif", 36, 36);
+    loadimage(&EnemyTankLEFT, L"..\\img\\enemytank\\enemyLEFT.gif", 36, 36);
+}
 
 void EnemyTank::RandomTank()
 {
@@ -11,26 +23,27 @@ void EnemyTank::RandomTank()
     m_stepCnt = rand() % MAX_STEP;
 }
 
+void EnemyTank::SetPos(Point pos)
+{
+    m_pos = pos;
+}
+
+
 void EnemyTank::Display()
 {
-    IMAGE EnemyTank;
     switch (m_dir)
     {
     case UP:
-        loadimage(&EnemyTank, L"..\\img\\enemytank\\enemyUP.gif",36,36);
-        putimage(m_pos.GetX()-18, m_pos.GetY()-18, &EnemyTank);
+        putimage(m_pos.GetX()-18, m_pos.GetY()-18, &EnemyTankUP);
         break;
     case DOWN:
-        loadimage(&EnemyTank, L"..\\img\\enemytank\\enemyDOWN.gif", 36, 36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTankDOWN);
         break;
     case RIGHT:
-        loadimage(&EnemyTank, L"..\\img\\enemytank\\enemyRIGHT.gif", 36, 36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTankRIGHT);
         break;
     case LEFT:
-        loadimage(&EnemyTank, L"..\\img\\enemytank\\enemyLEFT.gif", 36, 36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &EnemyTankLEFT);
         break;
     }
 }

@@ -42,7 +42,7 @@ public:
     }
 
     static bool m_bNewLevel;
-
+    static void Die();
 private:
     static int m_nLife; // ÉúÃüÖµ
 

@@ -31,12 +31,12 @@ public:
     {
         m_Disappear = true;
     }
+    Dir m_dir;
+    Point m_pos;
 protected:
     void CalculateSphere();
     bool m_Disappear;
     int m_step;
-    Point m_pos;
-    Dir m_dir;
     Rect m_rectSphere; //∂‘œÛ∑∂Œß
 
 };

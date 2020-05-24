@@ -3,12 +3,13 @@
 
 #include "Tank.h"
 #include "Bullet.h"
+
 class MainTank : public Tank
 {
 public:
     MainTank():Tank()
     {
-        m_pos.Set(300, 300);
+        m_pos.Set(300, 700);
         this->CalculateSphere();
         m_dir = Dir::UP;
         m_step = 6;
@@ -26,6 +27,11 @@ public:
     {
         return m_rectSphere;
     }
+    IMAGE maintankUP;
+    IMAGE maintankDOWN;
+    IMAGE maintankLEFT;
+    IMAGE maintankRIGHT;
+    void InitMainTankImage();
 protected:
     //坦克所占矩形体积
     void CalculateSphere();

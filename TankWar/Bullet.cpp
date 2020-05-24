@@ -1,5 +1,11 @@
 #include "Bullet.h"
 
+
+IMAGE bullets;
+void InitBulletsimage()
+{
+    loadimage(&bullets, L"..\\img\\bullet.gif", 6, 6);
+}
 Bullet::Bullet() {}
 
 Bullet::Bullet(Point pos, Dir dir)
@@ -17,8 +23,6 @@ Bullet::~Bullet(){}
 
 void Bullet::Display()
 {
-	IMAGE bullets;
-	loadimage(&bullets, L"..\\img\\bullet.gif",6,6);
 	putimage(m_pos.GetX() - 1, m_pos.GetY() - 1,&bullets);
     
 }

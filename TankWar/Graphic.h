@@ -27,6 +27,7 @@ public:
 
 	static Rect GetBattleGround();
 	static void ShowScore();
+	static void ShowGameOver();
 	static char m_pArray[100];
 private:
 	static Rect m_rectScreen;

@@ -19,8 +19,7 @@ int Setting::m_nTankSum = 0;
 void Setting::NewGameLevel()
 {
     m_nGameLevel++;
-
-    m_nTankNum = 10 + 5 * (m_nGameLevel - 1);
+    m_nTankNum = 5;
     m_nTankScore += 5;
 }
 
@@ -37,4 +36,9 @@ void Setting::TankDamaged()
     {
         m_bNewLevel = true;
     }
+}
+
+void Setting::Die()
+{
+    m_nLife -= 1;
 }

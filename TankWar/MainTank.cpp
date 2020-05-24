@@ -1,7 +1,12 @@
 #include "MainTank.h"
 
-
-
+void MainTank::InitMainTankImage()
+{
+    loadimage(&maintankUP, L"..\\img\\mainup.gif", 36, 36);
+    loadimage(&maintankDOWN, L"..\\img\\maindown.gif", 36, 36);
+    loadimage(&maintankLEFT, L"..\\img\\mainleft.gif", 36, 36);
+    loadimage(&maintankRIGHT, L"..\\img\\mainright.gif", 36, 36);
+}
 void MainTank::SetDir(Dir dir)
 {
     m_dir = dir;
@@ -9,24 +14,19 @@ void MainTank::SetDir(Dir dir)
 
 void MainTank::DrawTankBody()
 {
-    IMAGE maintank;
     switch(m_dir)
     {
     case UP:
-        loadimage(&maintank, L"..\\img\\mainup.gif",36,36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintankUP);
         break;
     case DOWN:
-        loadimage(&maintank, L"..\\img\\maindown.gif",36,36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintankDOWN);
         break;
     case LEFT:
-        loadimage(&maintank, L"..\\img\\mainleft.gif", 36, 36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintankLEFT);
         break;
     case RIGHT:
-        loadimage(&maintank, L"..\\img\\mainright.gif", 36, 36);
-        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintank);
+        putimage(m_pos.GetX() - 18, m_pos.GetY() - 18, &maintankRIGHT);
         break;
     }
 }
@@ -90,3 +90,5 @@ void MainTank::Shoot(list<Bullet*>& Bullets)
     Bullet* pBullet = new Bullet(m_pos,m_dir);
     Bullets.push_back(pBullet);
 }
+
+
