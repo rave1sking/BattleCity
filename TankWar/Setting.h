@@ -10,7 +10,7 @@ class Setting
 public:
     static void NewGameLevel();
     static void TankDamaged();
-
+    static void SetLife(int n);
     static int GetLife()
     {
         return m_nLife;
@@ -43,7 +43,9 @@ public:
 
     static bool m_bNewLevel;
     static void Die();
+    static int Getflag();
 private:
+    static int flag;
     static int m_nLife; // 生命值
 
     static int m_nGameLevel;    // 当前游戏关卡

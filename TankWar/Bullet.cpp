@@ -78,9 +78,3 @@ void Bullet::CalculateSphere()
 {
     m_rectSphere.Set(m_pos.GetX() - 2, m_pos.GetY() - 2, m_pos.GetX() + 2, m_pos.GetY() + 2);
 }
-
-
-void Bullet::bomb(list<Bomb*>& Bombs)
-{
-    Bombs.push_back(new Bomb(m_pos, S));
-}

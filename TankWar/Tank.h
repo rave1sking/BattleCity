@@ -31,13 +31,13 @@ public:
     {
         m_Disappear = true;
     }
+    Rect m_rectSphere;
     Dir m_dir;
     Point m_pos;
 protected:
     void CalculateSphere();
     bool m_Disappear;
-    int m_step;
-    Rect m_rectSphere; //对象范围
+    int m_step;//对象范围
 
 };
 

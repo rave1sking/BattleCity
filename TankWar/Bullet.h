@@ -25,10 +25,10 @@ public:
     {
         m_Disappear = true;
     }
+    Point m_pos;
 protected:
     void CalculateSphere();
     bool m_Disappear;
-    Point m_pos;
     int m_step;
     Dir m_dir;
     Rect m_rectSphere;

@@ -1,8 +1,8 @@
 #include "Setting.h"
-
+#include "Graphic.h"
 
 bool Setting::m_bNewLevel = true;
-
+int Setting::flag = 0;
 int Setting::m_nLife = 5;
 
 int Setting::m_nGameLevel = 0;
@@ -32,6 +32,11 @@ void Setting::TankDamaged()
 
     m_nTankSum++;
 
+    if (m_nTankNum == 0 && m_nGameLevel == 3)
+    {
+        flag = 1;
+    }
+
     if (m_nTankNum == 0)
     {
         m_bNewLevel = true;
@@ -41,4 +46,13 @@ void Setting::TankDamaged()
 void Setting::Die()
 {
     m_nLife -= 1;
+}
+void Setting::SetLife(int n)
+{
+    m_nLife = n;
+}
+
+int Setting::Getflag()
+{
+    return flag;
 }
