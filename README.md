@@ -1,4 +1,4 @@
-# BattleCity
+# BattleCity 觉得对你有帮助请给个星星
 # 用C++ 面向对象思想 结合Easy X开发的坦克大战
 ## 效果：
 ![](/img/1.png)
