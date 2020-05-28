@@ -1,5 +1,6 @@
 # BattleCity 觉得对你有帮助请给个星星
-# 用C++ 面向对象思想 结合Easy X开发的坦克大战
+# 用C++ 面向对象思想 结合Easy X，vs2019 开发的坦克大战
+# 将项目down到本地点击TankWar.sln 即可在vs2019下运行main.cpp
 ## 效果：
 ![](/img/1.png)
 ![](/img/2.png)
