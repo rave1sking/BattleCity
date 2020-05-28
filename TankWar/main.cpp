@@ -173,7 +173,9 @@ void CheckCrashEnemy_to_Base()
 }
 //检测坦克和墙壁的碰撞
 void CheckCrashTank_to_Barriers()
-{
+{   
+
+	//敌方坦克检测，遇到墙就改变方向//待改进
 	for (list<EnemyTank*>::iterator it1 = lstTanks.begin(); it1 != lstTanks.end(); it1++)
 		for (list<Barrier*>::iterator it2 = Barrieies.begin(); it2 != Barrieies.end(); it2++)
 			if((*it2)->GetTpye() !=3 )
@@ -277,7 +279,7 @@ void CheckCrashTank_to_Barriers()
 //生成地图
 void CreateMap1()
 {
-	Barrieies.clear();
+	    Barrieies.clear();
 		//创建Point list，向list中添加Point，
 		list<Point> POINT1;
 		Point x1[100];
@@ -288,6 +290,22 @@ void CreateMap1()
 			x1[i].SetY(400);
 			POINT1.push_back(x1[i]);
 		}
+
+		list<Point> STEEL;
+		Point steel[10];
+		i = 0;
+		for (int x = 30; x <= 100; x += 30, i++)
+		{
+			steel[i].Set(x, 300);
+			STEEL.push_back(steel[i]);
+		}
+		for (int x = 720; x <= 780; x += 30, i++)
+		{
+			steel[i].Set(x, 300);
+			STEEL.push_back(steel[i]);
+		}
+
+
 		//搭建基地四周的墙
 		list<Point> POINT2;
 		Point x2[100];
@@ -311,15 +329,34 @@ void CreateMap1()
 			POINT2.push_back(x2[i]);
 		}
 
+
+		//草
 		list<Point> POINT3;
 		Point x3[100];
-		int k = 0;
-		x3[k].Set(100, 600);
-		POINT3.push_back(x3[k]);
-		k++;
-		x3[k].Set(700, 600);
-		POINT3.push_back(x3[k]);
+		i = 0;
+		for (int x = 100; x < 220; x+= 30 ,i++)
+		{
+			x3[i].Set(x, 600);
+			POINT3.push_back(x3[i]);
+		}
+		for (int x = 100; x < 220; x+=30, i++)
+		{
+			x3[i].Set(x, 630);
+			POINT3.push_back(x3[i]);
+		}
 
+		for (int x = 580 ;x < 700; x += 30, i++)
+		{
+			x3[i].Set(x, 600);
+			POINT3.push_back(x3[i]);
+		}
+		for (int x = 580; x < 700; x += 30, i++)
+		{
+			x3[i].Set(x, 630);
+			POINT3.push_back(x3[i]);
+		}
+
+		//放到list里
 		list<Point>::iterator B;
 		for (B = POINT1.begin(); B != POINT1.end(); B++)
 		{
@@ -341,6 +378,12 @@ void CreateMap1()
 			Barrieies.push_back(b);
 		}
 
+		for (B = STEEL.begin(); B != STEEL.end(); B++)
+		{
+			Barrier* b = new Barrier(*B, 2);
+			b->InitBarrierImage();
+			Barrieies.push_back(b);
+		}
 		/*
 		Point a(500, 500);
 		Barrier *b = new Barrier(a, 1);
@@ -353,18 +396,273 @@ void CreateMap1()
 void CreateMap2()
 {
 	Barrieies.clear();
+	list<Point> NORMAL;
+	Point normal [100] ;
+	int i = 0, x = 0, y = 0;
+	for (y = 60; y <= 330; y += 30,i++)
+	{
+		normal[i].Set(20, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(100, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(700, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(780, y);
+		NORMAL.push_back(normal[i]);
+
+	}
+
+	for (y = 100; y <= 340; y += 30,i++)
+	{
+		normal[i].Set(340, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(460, y);
+		NORMAL.push_back(normal[i]);
+	}
+
+	for (y = 500; y <= 710; y += 30, i++)
+	{
+		normal[i].Set(20,y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(100, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(700, y);
+		NORMAL.push_back(normal[i]);
+
+		normal[i].Set(780, y);
+		NORMAL.push_back(normal[i]);
+
+	}
+
+	for (x = 130; x <= 250;x += 30,i++)
+	{
+		normal[i].Set(x, 500);
+		NORMAL.push_back(normal[i]);
+	}
+
+	for (x = 580; x <= 700;x += 30, i++)
+	{
+		normal[i].Set(x, 500);
+		NORMAL.push_back(normal[i]);
+	}
+
+	list<Point> STEEL;
+	Point steel[20];
+	i = 0;
+	for (x = 340;x <= 460;x += 30, i++)
+	{
+		steel[i].Set(x, 340);
+		STEEL.push_back(steel[i]);
+    }
+
+	for (x = 20; x <= 110; x += 30,i++)
+	{
+		steel[i].Set(x, 380);
+		STEEL.push_back(steel[i]);
+	}
+
+	for (x = 690; x <= 780; x += 30, i++)
+	{
+		steel[i].Set(x, 380);
+		STEEL.push_back(steel[i]);
+	}
+
+	list<Point> GRASS;
+	Point grass[20];
+	i = 0;
+	for (x = 180; x <= 210;x += 30, i++)
+	{
+		grass[i].Set(x, 400);
+		GRASS.push_back(grass[i]);
+		grass[i].Set(x, 430);
+		GRASS.push_back(grass[i]);
+
+		grass[i].Set(x, 600);
+		GRASS.push_back(grass[i]);
+		grass[i].Set(x, 630);
+		GRASS.push_back(grass[i]);
+	}
+	for (x = 600; x <= 630;x += 30, i++)
+	{
+		grass[i].Set(x, 400);
+		GRASS.push_back(grass[i]);
+		grass[i].Set(x, 430);
+		GRASS.push_back(grass[i]);
+
+		grass[i].Set(x, 600);
+		GRASS.push_back(grass[i]);
+		grass[i].Set(x, 630);
+		GRASS.push_back(grass[i]);
+	}
+
+	//BASE
+	list<Point> POINT2;
+	Point x2[100];
+	i = 0;
+	for (int y = 653; y <= 743; y += 30, i++)
+	{
+		x2[i].SetX(335);
+		x2[i].SetY(y);
+		POINT2.push_back(x2[i]);
+	}
+	for (int x = 335; x <= 455; x += 30, i++)
+	{
+		x2[i].SetX(x);
+		x2[i].SetY(653);
+		POINT2.push_back(x2[i]);
+	}
+	for (int y = 683; y <= 743; y += 30, i++)
+	{
+		x2[i].SetX(455);
+		x2[i].SetY(y);
+		POINT2.push_back(x2[i]);
+	}
+
+	list<Point>::iterator B;
+	//normal
+	for (B = NORMAL.begin(); B != NORMAL.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 1);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+
+	for (B = STEEL.begin(); B != STEEL.end();B++)
+	{
+		Barrier* b = new Barrier(*B, 2);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+	for (B = GRASS.begin(); B != GRASS.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 3);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+
+	for (B = POINT2.begin(); B != POINT2.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 1);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
 }
 
 void CreateMap3()
 {
 	Barrieies.clear();
+	//L
+	list<Point> POINTL;
+	Point L[100];
+	int i = 0;
+	for (int y = 200; y < 440; y += 30, i++)
+	{
+		L[i].Set(50, y);
+		POINTL.push_back(L[i]);
+	}
+	for (int x = 80; x < 200; x += 30, i++)
+	{
+		L[i].Set(x, 410);
+		POINTL.push_back(L[i]);
+	}
+
+	//X
+	list<Point> POINTX;
+	Point X[100];
+	i = 0;
+	for (int x = 270, y = 200; x <= 480; x += 30, y += 30, i++)
+	{
+		X[i].Set(x, y);
+		POINTX.push_back(X[i]);
+	}
+	for (int x = 480, y = 200; x >= 270; x -= 30, y += 30, i++)
+	{
+		X[i].Set(x, y);
+		POINTX.push_back(X[i]);
+	}
+
+	//T
+	list<Point> POINTT;
+	Point T[100];
+	i = 0;
+	for (int x = 600, y = 200; x <= 750 ; x += 30, i++)
+	{
+		T[i].Set(x, y);
+		POINTX.push_back(T[i]);
+	}
+	for (int x = 675, y = 230; y <= 410; y += 30, i++)
+	{
+		T[i].Set(x, y);
+		POINTX.push_back(T[i]);
+	}
+
+	//基地
+	list<Point> POINT2;
+	Point x2[100];
+	i = 0;
+	for (int y = 653; y <= 743; y += 30, i++)
+	{
+		x2[i].SetX(335);
+		x2[i].SetY(y);
+		POINT2.push_back(x2[i]);
+	}
+	for (int x = 335; x <= 455; x += 30, i++)
+	{
+		x2[i].SetX(x);
+		x2[i].SetY(653);
+		POINT2.push_back(x2[i]);
+	}
+	for (int y = 683; y <= 743; y += 30, i++)
+	{
+		x2[i].SetX(455);
+		x2[i].SetY(y);
+		POINT2.push_back(x2[i]);
+	}
+
+
+
+	list<Point>::iterator B;
+	//L
+	for (B = POINTL.begin(); B != POINTL.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 2);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+	//X
+	for (B = POINTX.begin(); B != POINTX.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 2);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+	//T
+	for (B = POINTT.begin(); B != POINTT.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 2);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
+	//BASE
+	for (B = POINT2.begin(); B != POINT2.end(); B++)
+	{
+		Barrier* b = new Barrier(*B, 1);
+		b->InitBarrierImage();
+		Barrieies.push_back(b);
+	}
 }
 
 
 int main()
 {
 	Graphic::Create();
-	//BeginBatchDraw();
+	BeginBatchDraw();
 	//按F进入坦克
 	/*
 	IMAGE img2;
@@ -392,8 +690,7 @@ int main()
 	loadimage(&base, L"..\\img\\base.png", 90, 90);
 	mainTank.InitMainTankImage();
 	InitBulletsimage();
-
-	BASE.Set(350,668,440,758);
+	BASE.Set(370,688,420,758);
 	while (loop)
 	{
 		if (Setting::m_bNewLevel) //是否新游戏
@@ -407,9 +704,15 @@ int main()
 			if (Setting::GetGameLevel() == 1)
 				CreateMap1();
 			if (Setting::GetGameLevel() == 2)
+			{
 				CreateMap2();
+				mainTank.m_pos.Set(300, 700);
+			}
 			if (Setting::GetGameLevel() == 3)
+			{
 				CreateMap3();
+				mainTank.m_pos.Set(300, 700);
+			}
 			for (int i = 0; i < Setting::GetTankNum(); i++)
 			{
 				EnemyTank* p = new EnemyTank();
@@ -472,28 +775,6 @@ int main()
 			CheckCrashTank_to_Barriers();
 			CheckCrashEnemy_to_Base();
 			Graphic::DrawBattleGround();
-			/*
-			if (Setting::m_bNewLevel)
-			{
-				Setting::m_bNewLevel = false;
-
-				Setting::NewGameLevel();
-
-				EnemyTank* p1 = new EnemyTank();
-				lstTanks.push_back(p1);
-				EnemyTank* p2 = new EnemyTank();
-				lstTanks.push_back(p2);
-				EnemyTank* p3 = new EnemyTank();
-				lstTanks.push_back(p3);
-				EnemyTank* p4 = new EnemyTank();
-				lstTanks.push_back(p4);
-				EnemyTank* p5 = new EnemyTank();
-
-
-				// 设置暂停，按Enter开始
-				skip = true;
-				continue;
-			}*/
 			
 			//判断游戏是否结束
 			if (mainTank.IsDisappear())

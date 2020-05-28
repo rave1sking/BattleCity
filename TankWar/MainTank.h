@@ -7,13 +7,12 @@
 class MainTank : public Tank
 {
 public:
-    MainTank():Tank()
+    MainTank() :Tank()
     {
         m_pos.Set(300, 700);
         this->CalculateSphere();
         m_dir = Dir::UP;
         m_step = 6;
-
     }
 
     ~MainTank() {}

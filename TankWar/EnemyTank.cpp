@@ -54,12 +54,28 @@ void EnemyTank::RandomDir(int type)
     if (type == 1)
     {
         Dir dir;
-        while ((dir = (Dir)(Dir::UP + (rand() % 4))) == m_dir) {} 
+        while (true)
+        {
+            dir = (Dir)(Dir::UP + (rand() % 4));
+            if (dir == Dir::UP)      //防止向上
+                continue;
+            else 
+                if (dir == m_dir)
+                {
+                    continue;
+                }
+             break;
+        } 
         m_dir = dir;
     }
     else
     {
-        m_dir = (Dir)(Dir::UP + (rand() % 4));
+        Dir InitDir = (Dir)(Dir::UP + (rand() % 4));
+        if (InitDir == Dir::UP)
+        {
+            InitDir = (Dir)(Dir::UP + (rand() % 4));
+        }
+        m_dir = InitDir;
     }
 }
 void EnemyTank::Move()
@@ -104,7 +120,7 @@ void EnemyTank::Move()
     if (m_stepCnt >= MAX_STEP)  //要写>=因为可能一上来就会 m_stepCnt = MAX_STEP
     {
         m_stepCnt = 0;
-        this->RandomDir(0);
+        this->RandomDir(1);
     }
     if (m_stepCnt % MAX_STEP_SHOOT == 0)  //每三步进行一次射击
     {
